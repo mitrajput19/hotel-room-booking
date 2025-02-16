@@ -18,3 +18,12 @@ class AddBooking extends BookingEvent {
 
 class GetBooking extends BookingEvent {
 }
+
+class RemoveBooking extends BookingEvent {
+  final Booking booking;
+
+  const RemoveBooking(this.booking);
+
+  @override
+  List<Object> get props => [booking];
+}

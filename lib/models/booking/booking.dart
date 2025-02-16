@@ -36,7 +36,7 @@ class Booking {
      this.rooms,
      this.guests,
      this.totalPrice,
-  });
+  }) ;
 
 
 }

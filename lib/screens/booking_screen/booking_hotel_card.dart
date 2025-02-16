@@ -5,12 +5,14 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hotel_room_booking/models/booking/booking.dart';
 import 'package:hotel_room_booking/router/router.dart';
 import 'package:intl/intl.dart';
 
+import '../../bloc/booking_bloc/booking_bloc.dart';
 import '../../models/hotel.dart';
 
 class BookingHotelCard extends StatefulWidget {
@@ -27,7 +29,9 @@ class _BookingHotelCardState extends State<BookingHotelCard> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
+      onLongPress: (){
+        context.read<BookingBloc>().add(RemoveBooking(widget.hotel));
+        BlocProvider.of<BookingBloc>(context).add(GetBooking());
       },
       child: Container(
         padding: EdgeInsets.all(10),

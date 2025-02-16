@@ -468,6 +468,7 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
                   if (hotel == null) return;
 
                   final booking = Booking(
+                    id: hotel?.id,
                     hotel: hotel!,
                     checkIn: checkIn,
                     checkOut: checkOut,
@@ -475,6 +476,15 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
                     guests: guest,
                     totalPrice: _calculateTotal(),
                   );
+                  for(var i in context.read<BookingBloc>().bookings){
+                    if(i.hotel?.id == hotel?.id) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Already in cart')),
+                      );
+                        return;
+                      }
+                    }
+
 
                   context.read<BookingBloc>().add(AddBooking(booking));
                 },
