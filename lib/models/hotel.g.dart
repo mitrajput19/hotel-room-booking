@@ -17,16 +17,16 @@ class HotelAdapter extends TypeAdapter<Hotel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Hotel(
-      id: fields[0] as String,
-      name: fields[1] as String,
-      description: fields[2] as String,
-      rating: fields[3] as double,
-      pricePerNight: fields[4] as double,
-      mainImage: fields[5] as String,
-      location: fields[6] as Location,
-      amenities: (fields[7] as List).cast<String>(),
-      availableRooms: fields[8] as int,
-      roomTypes: (fields[9] as List).cast<RoomType>(),
+      id: fields[0] as String?,
+      name: fields[1] as String?,
+      description: fields[2] as String?,
+      rating: fields[3] as double?,
+      pricePerNight: fields[4] as double?,
+      mainImage: fields[5] as String?,
+      location: fields[6] as Location?,
+      amenities: (fields[7] as List?)?.cast<String>(),
+      availableRooms: fields[8] as int?,
+      roomTypes: (fields[9] as List?)?.cast<RoomType>(),
     );
   }
 
@@ -78,10 +78,10 @@ class LocationAdapter extends TypeAdapter<Location> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Location(
-      address: fields[0] as String,
-      city: fields[1] as String,
-      country: fields[2] as String,
-      coordinates: fields[3] as Coordinates,
+      address: fields[0] as String?,
+      city: fields[1] as String?,
+      country: fields[2] as String?,
+      coordinates: fields[3] as Coordinates?,
     );
   }
 
@@ -121,8 +121,8 @@ class CoordinatesAdapter extends TypeAdapter<Coordinates> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Coordinates(
-      latitude: fields[0] as double,
-      longitude: fields[1] as double,
+      latitude: fields[0] as double?,
+      longitude: fields[1] as double?,
     );
   }
 
@@ -158,9 +158,9 @@ class RoomTypeAdapter extends TypeAdapter<RoomType> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return RoomType(
-      type: fields[0] as String,
-      price: fields[1] as double,
-      capacity: fields[2] as int,
+      type: fields[0] as String?,
+      price: fields[1] as double?,
+      capacity: fields[2] as int?,
     );
   }
 
