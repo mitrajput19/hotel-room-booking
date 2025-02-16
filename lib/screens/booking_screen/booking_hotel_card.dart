@@ -34,10 +34,10 @@ class _BookingHotelCardState extends State<BookingHotelCard> {
         BlocProvider.of<BookingBloc>(context).add(GetBooking());
       },
       child: Container(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: Color(0xFFe9ebed))),
+            border: Border.all(color: const Color(0xFFe9ebed))),
         child: Row(
           children: [
             ClipRRect(
@@ -49,11 +49,11 @@ class _BookingHotelCardState extends State<BookingHotelCard> {
                 imageUrl:
                     widget.hotel.hotel?.mainImage ?? "",
                 errorWidget: (context, str, value) {
-                  return SizedBox();
+                  return const SizedBox();
                 },
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
             Expanded(
@@ -96,19 +96,19 @@ class _BookingHotelCardState extends State<BookingHotelCard> {
                   ),
                   Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.location_on_outlined,
                         color: Color(0xFF9ea6ac),
                         size: 14,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 4,
                       ),
                       Expanded(
                         child: Text(
                             '${widget.hotel.hotel?.location?.city ?? ""} ${widget.hotel.hotel?.location?.address ?? ""}',
                           style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                color: Color(
+                                color: const Color(
                                   0xFF9ea6ac,
                                 ),
                             fontSize: 11
@@ -117,14 +117,14 @@ class _BookingHotelCardState extends State<BookingHotelCard> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   RichText(text: TextSpan(
                     text: "\$${widget.hotel.hotel?.pricePerNight ?? 0}",style: Theme.of(context)
                       .textTheme
                       .bodyLarge!
-                      .copyWith(fontWeight: FontWeight.w700,color: Color(0xFF2e58b1)),
+                      .copyWith(fontWeight: FontWeight.w700,color: const Color(0xFF2e58b1)),
                     children: [
                       TextSpan(
                         text: " /night",style: Theme.of(context)
@@ -134,16 +134,16 @@ class _BookingHotelCardState extends State<BookingHotelCard> {
                       ),
                     ]
                   ),),
-                  SizedBox(height: 10,),
-                  Divider(color: Color(0xFFe9ebed),),
-                  SizedBox(height: 10,),
+                  const SizedBox(height: 10,),
+                  const Divider(color: Color(0xFFe9ebed),),
+                  const SizedBox(height: 10,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         children: [
-                          Icon(Icons.calendar_month,color: Color(0xFF78828a),size: 18,),
-                          SizedBox(width: 2,),
+                          const Icon(Icons.calendar_month,color: Color(0xFF78828a),size: 18,),
+                          const SizedBox(width: 2,),
                           Text("Dates",style: Theme.of(context)
                               .textTheme
                               .bodyLarge!
@@ -156,14 +156,14 @@ class _BookingHotelCardState extends State<BookingHotelCard> {
                           .copyWith(fontWeight: FontWeight.w700,fontSize: 12),),
                     ],
                   ),
-                  SizedBox(height: 4,),
+                  const SizedBox(height: 4,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         children: [
-                          Icon(Icons.person,color: Color(0xFF78828a),size: 18,),
-                          SizedBox(width: 2,),
+                          const Icon(Icons.person,color: Color(0xFF78828a),size: 18,),
+                          const SizedBox(width: 2,),
                           Text("Guest",style: Theme.of(context)
                               .textTheme
                               .bodyLarge!
