@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:hotel_room_booking/screens/booking_screen/booking_screen.dart';
 
 import '../screens/hotel_detail_screen/hotel_detail_screen.dart';
 import '../screens/hotel_listing_screen/hotel_listing_screen.dart';
@@ -15,9 +16,9 @@ final GoRouter router = GoRouter(
         hotelId: state.pathParameters['hotelId'],
       ),
     ),
-    // GoRoute(
-    //   path: '/cart',
-    //   builder: (context, state) => const CartScreen(),
-    // ),
+    GoRoute(
+      path: '/booking',
+      builder: (context, state) => const BookingScreen(),
+    ),
   ],
 );

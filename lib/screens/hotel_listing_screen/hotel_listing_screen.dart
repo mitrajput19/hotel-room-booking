@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hotel_room_booking/bloc/hotel_listing_bloc/hotel_listing_bloc.dart';
 import 'package:hotel_room_booking/screens/hotel_listing_screen/hotel_card.dart';
 import 'package:shimmer/shimmer.dart';
@@ -40,7 +41,9 @@ class _HotelListingScreenState extends State<HotelListingScreen> {
         actions: [
           IconButton(
             icon: const FaIcon(FontAwesomeIcons.fileLines),
-            onPressed: () {},
+            onPressed: () {
+              context.push("/booking");
+            },
           )
         ],
       ),

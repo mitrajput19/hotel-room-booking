@@ -24,7 +24,7 @@ class _HotelCardState extends State<HotelCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        context.push('/details/${widget.hotel}');
+        context.push('/details/${widget.hotel.id}');
 
       },
       child: Column(

@@ -9,6 +9,8 @@ import 'package:hotel_room_booking/bloc/hotel_listing_bloc/hotel_listing_bloc.da
 import 'package:hotel_room_booking/router/router.dart';
 import 'package:intl/intl.dart';
 
+import '../../bloc/booking_bloc/booking_bloc.dart';
+import '../../models/booking/booking.dart';
 import '../../models/hotel.dart';
 
 class HotelDetailScreen extends StatefulWidget {
@@ -27,10 +29,48 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
   int guest = 1;
   Hotel? hotel;
 
+  @override
+  void initState() {
+    super.initState();
+    _loadHotelDetails();
+  }
 
+  void _loadHotelDetails() async {
+    hotel =  (context.read<HotelListingBloc>().allHotels ?? []).firstWhere((element) => element.id.toString() == widget.hotelId.toString());
+
+    setState(() {});
+  }
+
+  double _calculateTotal() {
+    if (hotel == null) return 0.0;
+    final days = checkOut.difference(checkIn).inDays;
+    return ((hotel?.pricePerNight ?? 0) * days * room) + 10;
+  }
+
+
+  double _calculatePriceWithoutCharges() {
+    if (hotel == null) return 0.0;
+    final days = checkOut.difference(checkIn).inDays;
+    return ((hotel?.pricePerNight ?? 0) * days * room);
+  }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocListener<BookingBloc, BookingState>(
+      listener: (context, state) {
+        if (state is BookingAdded) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Added to cart successfully!')),
+          );
+          Navigator.pop(context);
+        }
+        if (state is BookingError) {
+          log(state.message,name: "Error");
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.message)),
+          );
+        }
+      },
+  child: Scaffold(
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () {
@@ -185,7 +225,7 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
                   children: [
                     GestureDetector(
                       onTap: (){
-                        if(room>0){
+                        if(room>1){
                           setState(() {
                             --room;
                           });
@@ -217,9 +257,11 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
                     ),
                     GestureDetector(
                       onTap: (){
+                        if(room<5){
                           setState(() {
                             ++room;
                           });
+                        }
 
                       },
                       child: Container(
@@ -254,7 +296,7 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
                   children: [
                     GestureDetector(
                       onTap: (){
-                        if(guest>0){
+                        if(guest>1){
                           setState(() {
                             guest--;
                           });
@@ -286,10 +328,11 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
                     ),
                     GestureDetector(
                       onTap: (){
+                        if(guest<10){
                           setState(() {
                             guest++;
                           });
-
+                        }
                       },
                       child: Container(
                         decoration: const BoxDecoration(
@@ -330,7 +373,7 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
                       .copyWith(fontWeight: FontWeight.w400),
                 ),
                 Text(
-                  "\$400",
+                  "\$${_calculatePriceWithoutCharges().toStringAsFixed(2)}",
                   style: Theme.of(context)
                       .textTheme
                       .bodyLarge!
@@ -402,7 +445,7 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
                       .copyWith(fontWeight: FontWeight.w700),
                 ),
                 Text(
-                  "\$410",
+                  "\$${_calculateTotal().toStringAsFixed(2)}",
                   style: Theme.of(context)
                       .textTheme
                       .bodyLarge!
@@ -421,7 +464,20 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               MaterialButton(
-                onPressed: () {},
+                onPressed: () {
+                  if (hotel == null) return;
+
+                  final booking = Booking(
+                    hotel: hotel!,
+                    checkIn: checkIn,
+                    checkOut: checkOut,
+                    rooms: room,
+                    guests: guest,
+                    totalPrice: _calculateTotal(),
+                  );
+
+                  context.read<BookingBloc>().add(AddBooking(booking));
+                },
                 height: 50,
                 minWidth: 80,
                 elevation: 0,
@@ -457,6 +513,7 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
           ),
         ),
       ),
-    );
+    ),
+);
   }
 }
